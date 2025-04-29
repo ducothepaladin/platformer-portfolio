@@ -1,0 +1,10 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+    cursor: url("../assets//img//objects/01.png") 22 20, auto;
+    overflow: hidden;
+}
