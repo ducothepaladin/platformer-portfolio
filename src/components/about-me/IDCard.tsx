@@ -22,7 +22,16 @@ export default function IDCard() {
           <div className="col-span-1 border-4 rounded-lg border-congo-brown-950 flex justify-center">
             <img className="bg-cover bg-congo-brown-100" src={profile} />
           </div>
-          <div className="col-span-2 flex flex-col justify-between">
+          <div className="col-span-2 flex flex-col">
+          <div className="flex flex-col gap-2 mb-2">
+              <div className="flex justify-between items-center text-cinderella-200 font-mono text-sm">
+              <span className="font-bold">Level: 23</span>
+              <span className="font-bold">XP: 580 / 1000</span>
+              </div>
+              <div className="w-full bg-congo-brown-700 rounded-full h-4 overflow-hidden border-4 border-congo-brown-950">
+              <div className="animate-pulse bg-anakiwa-300 h-full" style={{ width: "58%" }}></div>
+              </div>
+            </div>
             <p className="text-cinderella-950 text-justify text-xl bg-congo-brown-100 mb-2 rounded-lg border-4 border-congo-brown-950 font-mono p-4">
               <QuoteIcon className="text-anakiwa-800 inline-block me-1" />
               In the world of web development, I like to see myself as a blacksmith,
@@ -30,9 +39,10 @@ export default function IDCard() {
               each line, I craft solutions that bring ideas to life, always
               ready to face new challenges and evolve with every project.
             </p>
+            
             <div className=" gap-2 grid grid-cols-6">
                 {[js, node, react, tailwind, laravel, mysql].map((logo) => {
-                    return (<div className="flex justify-center p-2 bg-congo-brown-100 border-4 rounded-lg border-congo-brown-950 items-center">
+                    return (<div className="flex justify-center p-2 hover:scale-105 duration-150 bg-congo-brown-100 border-4 rounded-lg border-congo-brown-950 items-center">
                         <img className="bg-contain" src={logo} />
                       </div>)
                 })}
