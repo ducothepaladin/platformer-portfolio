@@ -35,6 +35,7 @@ export default class Player extends GameObject {
   private isDialog: boolean;
   private canvasWidth: number;
   private isDoorOpen: boolean;
+  private isEnterLeft: boolean;
   private navUrl: string;
 
   constructor(
@@ -86,6 +87,7 @@ export default class Player extends GameObject {
     this.dialog = dialog;
     this.isDialog = true;
     this.isDoorOpen = false;
+    this.isEnterLeft = true;
     this.canvasWidth = canvasWidth;
     this.navUrl = "";
   }
@@ -106,7 +108,11 @@ export default class Player extends GameObject {
 
   updateDialog(): void {
     this.dialog.style.opacity = this.isDialog ? "1" : "0";
-    if (typeof this.x === "number" && typeof this.width === "number" && typeof this.canvasWidth === "number") {
+    if (
+      typeof this.x === "number" &&
+      typeof this.width === "number" &&
+      typeof this.canvasWidth === "number"
+    ) {
       this.dialog.style.left = `${
         this.x + this.width * 8 > this.canvasWidth
           ? this.x - this.width * 8
@@ -120,9 +126,12 @@ export default class Player extends GameObject {
 
   dialogCheck(): void {
     if (
-      this.input.isPressed("w") || this.input.isPressed("ArrowUp") ||
-      this.input.isPressed("a") || this.input.isPressed("ArrowLeft") ||
-      this.input.isPressed("d") || this.input.isPressed("ArrowRight")
+      this.input.isPressed("w") ||
+      this.input.isPressed("ArrowUp") ||
+      this.input.isPressed("a") ||
+      this.input.isPressed("ArrowLeft") ||
+      this.input.isPressed("d") ||
+      this.input.isPressed("ArrowRight")
     )
       this.isDialog = false;
   }
@@ -148,9 +157,14 @@ export default class Player extends GameObject {
       this.isFallRight = true;
       this.velocity.x = this.speed;
     } else if (this.input.isPressed("e")) {
-      if(this.isDoorOpen) {
-        const navigateEvent = new CustomEvent("navigate", {detail: {route: `/${this.navUrl}`}});
-        window.dispatchEvent(navigateEvent);
+      if (this.isDoorOpen) {
+        this.isEnterLeft? this.velocity.x = -this.speed: this.velocity.x = +this.speed;
+        setTimeout(() => {
+          const navigateEvent = new CustomEvent("navigate", {
+            detail: { route: `/${this.navUrl}` },
+          });
+          window.dispatchEvent(navigateEvent);
+        }, 500);
       }
     } else {
       if (this.isGround)
@@ -305,6 +319,7 @@ export default class Player extends GameObject {
         this.navUrl = door.url;
         this.isDialog = true;
         this.isDoorOpen = true;
+        door.x < this.x? this.isEnterLeft = true : this.isEnterLeft = false;
         this.dialog.innerHTML = ducoDialogs[i];
       } else {
         door.close();
