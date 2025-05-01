@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Handle, NodeProps, Position } from "reactflow";
 
-export default function BranchNode({ data, id }: NodeProps) {
+export default function BranchNode({ data }: NodeProps) {
 
   return (
     <>
@@ -25,15 +25,15 @@ export default function BranchNode({ data, id }: NodeProps) {
             className="w-4 h-4 bg-cinderella-200 border-none"
           />
           <div className="hidden group-hover:flex items-center justify-center absolute top-0 right-0 w-full h-full text-congo-brown-800 opacity-95 z-50 bg-cinderella-200 rounded-2xl">
-            <span className="text-base font-semibold animate-bounce">
-              Explore Details
+            <span className="text-base font-semibold p-2">
+              {data.description??"Explore"}
             </span>
           </div>
           <div className="absolute bottom-3 right-3 text-sm text-cinderella-300 opacity-80 group-hover:opacity-100 transition-opacity">
-            Level 6
+            Level {data.level}
           </div>
           <div className="absolute top-3 left-3 text-sm text-cinderella-300 opacity-80 group-hover:opacity-100 transition-opacity">
-            <span className="font-semibold">Experience</span>
+            <span className="font-semibold">Experience {data.exp}</span>
           </div>
           <div className="absolute inset-0 rounded-2xl border-2 border-dashed border-cinderella-300 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
         </motion.div>

@@ -1,17 +1,20 @@
 import { Handle, Position, NodeProps, useReactFlow } from "reactflow"
 import { skillNodes } from "../../assets/data/node-datas";
+import checkStore from "../../store/checkStore";
 
-export default function CentralNode({data, id}: NodeProps) {
+export default function CentralNode({data}: NodeProps) {
 
     const { setNodes } = useReactFlow();
+    const { checks, updateCheck } = checkStore();
 
     const handleClick = () => {
-
+      
+      updateCheck({isSkillTreeOpen: !checks.isSkillTreeOpen});
       const rest = skillNodes.slice(1);
 
       rest.forEach((node, i) => {
         setTimeout(() => {
-          setNodes((prev) => [...prev, {...node, data: {...node.data, visible: !node.data.visible}}])
+          setNodes((prev) => [...prev, {...node, data: {...node.data, visible: checks.isSkillTreeOpen}}])
         }, 100 * i)
       })
 
@@ -22,7 +25,7 @@ export default function CentralNode({data, id}: NodeProps) {
       <Handle type="source" position={Position.Right} />
       <div className="text-cinderella-100 font-mono text-xl text-center tracking-wider">
       <span className="block mb-1 text-2xl font-bold">{data.label}</span>
-      <span className="text-sm opacity-75">Click to explore</span>
+      {checks.isSkillTreeOpen? <span className="text-sm opacity-75">Click to explore</span>: <span className="text-sm opacity-75">Close</span>}
       </div>
     </div>
   )
